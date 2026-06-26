@@ -3,6 +3,7 @@ import "../styles/reset.css";
 import "../styles/setup.css";
 import "../styles/global.css";
 import "../styles/typography.css";
+import { withBase } from "../lib/base.js";
 
 const {
   title = "Pine Merchant",
@@ -13,7 +14,7 @@ const {
   back,
 } = Astro.props;
 
-const homeUrl = import.meta.env.BASE_URL;
+const homeUrl = withBase();
 const backHref = back ?? homeUrl;
 ---
 

@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import { blogPosts } from "../../lib/blog.js";
+import { withBase } from "../../lib/base.js";
 
 export function getStaticPaths() {
    return blogPosts.map((post) => ({
@@ -12,7 +13,7 @@ export function getStaticPaths() {
 
 const { post } = Astro.props;
 const Content = post.Content;
-const blogUrl = `${import.meta.env.BASE_URL}blog/`;
+const blogUrl = withBase("blog/");
 ---
 
 <BaseLayout

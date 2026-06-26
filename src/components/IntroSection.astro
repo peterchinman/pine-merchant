@@ -1,8 +1,9 @@
 ---
 import BioText from "../../text/bio.md";
 import NavigationBar from "./NavigationBar.astro";
+import { withBase } from "../lib/base.js";
 
-const anagramScriptUrl = `${import.meta.env.BASE_URL}scripts/anagram-animator.js`;
+const anagramScriptUrl = withBase("scripts/anagram-animator.js");
 ---
 
 <section class="section intro-section" aria-label="Bio">

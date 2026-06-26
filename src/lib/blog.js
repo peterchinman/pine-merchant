@@ -1,3 +1,5 @@
+import { withBase } from "./base.js";
+
 const postModules = import.meta.glob("../../text/blog/*.md", { eager: true });
 
 function slugFromPath(path) {
@@ -38,7 +40,7 @@ export const blogPosts = Object.entries(postModules)
 
       return {
          slug,
-         url: `${import.meta.env.BASE_URL}blog/${slug}/`,
+         url: withBase(`blog/${slug}/`),
          title: frontmatter.title ?? slug,
          description: frontmatter.description ?? "",
          date,
