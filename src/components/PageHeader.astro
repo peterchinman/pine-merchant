@@ -3,38 +3,23 @@ const { label, title, description } = Astro.props;
 ---
 
 <header class="page-header">
-   {label && <p class="page-header__label">{label}</p>}
-   <h1>{title}</h1>
-   {description && <p class="page-header__description">{description}</p>}
+   {label && <p class="page-header__label quiet-voice">{label}</p>}
+   {
+      description && (
+         <p class="page-header__description lead-voice">{description}</p>
+      )
+   }
 </header>
 
 <style>
-   .page-header {
-      max-width: 56rem;
-      padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 6vw, 5rem)
-         clamp(2rem, 5vw, 4rem);
-   }
-
    .page-header__label {
       margin: 0 0 0.75rem;
-      color: var(--accent);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-   }
-
-   .page-header h1 {
-      margin: 0;
-      font-size: clamp(3rem, 10vw, 7rem);
-      line-height: 0.9;
-      letter-spacing: -0.08em;
+      color: var(--ink-muted);
    }
 
    .page-header__description {
       max-width: 38rem;
       margin: 1.5rem 0 0;
-      color: var(--muted);
-      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: var(--ink-muted);
    }
 </style>

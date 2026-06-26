@@ -1,0 +1,57 @@
+
+/* set global box-model so that padding and borders stay inside */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+} /* https://www.paulirish.com/2012/box-sizing-border-box-ftw */
+/* not sure... if this is really a winner anymore - with the inherit - let's reconsider $todo */
+
+a {
+	/* we use links as parent elements so often, that we can default to this */
+	display: block;
+
+	/* remove defaults */
+	text-decoration: none;
+	color: inherit;
+}
+
+/* the Meyer reset skips form controls, so buttons keep their UA chrome
+   (border, background, native appearance) — strip it so a button is
+   unstyled by default, the same as links above */
+button {
+	appearance: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+
+/* picture is inline by default, but we need it to accept block-level images in it */
+picture {
+	display: block;
+	/* overflow: hidden; */
+}
+
+/* globally set images to fill their parent and keep their ratio as the default */
+img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/* we generally need SVGs to act the same way as images */
+svg {
+  display: block;
+  width: 100%;
+  /* Safari seems to need height: 100% $todo - revisit */
+}
+
+/* selects for autonomous customelements which are inline by default */
+:where(:not(:defined)) {
+	display: block;
+}

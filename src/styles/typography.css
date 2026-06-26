@@ -1,0 +1,181 @@
+/* Typography system — semantic "voices" that components pull from.
+   No component should declare font-family / font-size / line-height itself;
+   it applies a voice class (or a prose / definition-list pattern) instead. */
+
+:root {
+  /* semantic font families (aliases over the families in global.css) */
+  --heading: var(--font-display); /* Tiny5 */
+  --body-copy: var(--font-mono); /* IBM Plex Mono */
+  --prose: var(--font-sans); /* IBM Plex Sans — long-form reading */
+
+  --globalLineHeight: 1.5;
+
+  /* static size scale; voices add fluidity with clamp + vw */
+  --fontSize--1: 0.8rem;
+  --fontSize-0: 1rem;
+  --fontSize-1: 1.25rem;
+  --fontSize-2: 1.5rem;
+  --fontSize-3: 2rem;
+  --fontSize-4: 3rem;
+  --fontSize-5: 5rem;
+  --fontSize-6: 7rem;
+}
+
+/* ---- voices ---- */
+
+.loud-voice {
+  /* hero / page titles */
+  font-family: var(--heading);
+  font-size: clamp(var(--fontSize-4), 10vw, var(--fontSize-6));
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.title-voice {
+  /* section headings */
+  font-family: var(--font-sans);
+  font-size: clamp(var(--fontSize-3), 7vw, var(--fontSize-5));
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.attention-voice,
+.prose :is(h2, h3) {
+  /* card titles, sub-headings, in-prose headings */
+  font-family: var(--font-sans);
+  font-size: clamp(var(--fontSize-1), 4vw, var(--fontSize-4));
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  /*text-transform: uppercase;*/
+}
+
+.lead-voice,
+.definition-list dd {
+  /* intro paragraphs, descriptions */
+  font-family: var(--body-copy);
+  font-size: var(--fontSize-0);
+  line-height: var(--globalLineHeight);
+
+  p + p {
+    padding-top: 1lh;
+  }
+}
+
+.body-copy,
+.definition-list dt {
+  /* default body text */
+  font-family: var(--body-copy);
+  font-size: var(--fontSize-0);
+  line-height: var(--globalLineHeight);
+}
+
+.quiet-voice {
+  /* labels, dates, eyebrows */
+  font-family: var(--body-copy);
+  font-size: var(--fontSize--1);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ---- prose: long-form markdown (e.g. blog body) ---- */
+.prose {
+  font-family: var(--prose);
+  font-size: var(--fontSize-0);
+  line-height: var(--globalLineHeight);
+
+ 	p + p, .footnote-container + p {
+		padding-top: 1lh;
+	}
+	
+	h1:not(:first-child) {
+		padding-top: 1.5lh;
+	}
+
+	h2:not(:first-child), * + h3:not(:first-child) {
+		padding-top: 1.5lh;
+	}
+
+	h1 + p {
+		padding-top: 1lh;
+	}
+
+	h2 + p, h3 + p {
+		padding-top: 1lh;
+	}
+
+	ul {
+		list-style-type: disc;
+	}
+
+	ol {
+		list-style-type: arabic;
+	}
+
+	ul, ol {
+		padding-block: 1lh;
+		margin-left: 1.5rem;
+	}
+
+	code {
+	  background-color: var(--bg-muted);
+		font-family: var(--font-mono);
+		line-height: 1.2;
+	}
+
+	h1 {
+      font-size: var(--fontSize-3);
+		font-weight: 500;
+		text-transform: uppercase;
+	}
+
+	h2 {
+      font-size: var(--fontSize-2);
+		font-weight: 600;
+	}
+
+	h3 {
+		font-size: var(--fontSize-1);
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	/* superscript — restore it (Meyer reset flattens sup) */
+	sup {
+		font-size: 0.7em;
+		line-height: 0;
+		vertical-align: super;
+	}
+
+	/* footnote reference markers render as small inline pills, not superscript */
+	sup:has(> [data-footnote-ref]) {
+		font-size: inherit;
+		line-height: 0;
+		vertical-align: baseline;
+	}
+
+	[data-footnote-ref] {
+		display: inline-block;
+		padding: 0.15rem 0.55rem;
+		margin-inline: 0.4rem;
+		border-radius: 0.3rem;
+		background-color: var(--bg-muted);
+		color: var(--ink);
+		font-size: var(--fontSize--1);
+		line-height: 1;
+		text-decoration: none;
+	}
+
+	[data-footnote-ref]:hover,
+	[data-footnote-ref]:focus-visible {
+		background-color: color-mix(in srgb, var(--ink) 20%, var(--bg));
+	}
+
+	/* open (its note is revealed below) */
+	[data-footnote-ref].selected {
+		background-color: var(--ink);
+		color: var(--bg);
+	}
+}

@@ -3,9 +3,9 @@ const { post } = Astro.props;
 ---
 
 <a class="blog-post-card" href={post.url}>
-   <span class="blog-post-card__date">{post.formattedDate}</span>
+   <span class="blog-post-card__date quiet-voice">{post.formattedDate}</span>
    <span class="blog-post-card__body">
-      <span class="blog-post-card__title">{post.title}</span>
+      <span class="blog-post-card__title attention-voice">{post.title}</span>
       {
          post.description && (
             <span class="blog-post-card__description">{post.description}</span>
@@ -21,20 +21,11 @@ const { post } = Astro.props;
       gap: 1rem;
       padding: 1.25rem 0;
       color: var(--link);
-      border-top: 1px solid color-mix(in srgb, var(--ink), transparent 82%);
       text-decoration: none;
    }
 
-   .blog-post-card:hover .blog-post-card__title,
-   .blog-post-card:focus-visible .blog-post-card__title {
-      text-decoration: underline;
-      text-decoration-thickness: 0.08em;
-      text-underline-offset: 0.18em;
-   }
-
    .blog-post-card__date {
-      color: var(--muted);
-      font-size: 0.9rem;
+      color: var(--ink-muted);
    }
 
    .blog-post-card__body {
@@ -42,14 +33,8 @@ const { post } = Astro.props;
       gap: 0.35rem;
    }
 
-   .blog-post-card__title {
-      font-size: clamp(1.25rem, 3vw, 2rem);
-      line-height: 1.1;
-      letter-spacing: -0.04em;
-   }
-
    .blog-post-card__description {
-      color: var(--muted);
+      color: var(--ink-muted);
    }
 
    @media (max-width: 700px) {

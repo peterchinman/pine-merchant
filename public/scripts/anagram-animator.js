@@ -71,7 +71,23 @@ class AnagramAnimator extends HTMLElement {
 
    connectedCallback() {
       this._connected = true;
+      this._ensureScaffold();
       this._init();
+   }
+
+   _ensureScaffold() {
+      if (this.querySelector('[data-role="start"]')) return;
+
+      const start = (this.textContent || "").trim();
+      const into = this.getAttribute("into");
+      this._authored = into ? `${start}|${into}` : start;
+
+      this.replaceChildren();
+      for (const role of ["start", "end"]) {
+         const span = document.createElement("span");
+         span.dataset.role = role;
+         this.append(span);
+      }
    }
 
    disconnectedCallback() {
@@ -90,7 +106,8 @@ class AnagramAnimator extends HTMLElement {
       this._removeHoverListeners = null;
       this._initError = null;
 
-      const anagrams = (this.getAttribute("anagrams") || "")
+      const raw = this.getAttribute("anagrams") ?? this._authored ?? "";
+      const anagrams = raw
          .split("|")
          .map((s) => s.trim())
          .filter((s) => s.length > 0);
@@ -112,16 +129,16 @@ class AnagramAnimator extends HTMLElement {
          return v !== null ? v : undefined;
       };
 
-      this.duration = num("duration") ?? 600;
-      this.stagger = num("stagger") ?? 25;
+      this.duration = num("duration") ?? 700;
+      this.stagger = num("stagger") ?? 18;
       this.easing = str("easing") ?? "cubic-bezier(0.34, 1.4, 0.64, 1)";
       this.arcFactor = num("arc-factor") ?? 0.3;
-      this.arcMax = num("arc-max") ?? 40;
+      this.arcMax = num("arc-max") ?? 28;
       this.arcPeak = num("arc-peak") ?? 0.4;
-      this.scalePeak = num("scale-peak") ?? 1.25;
+      this.scalePeak = num("scale-peak") ?? 1.15;
       this.durationJitter = num("duration-jitter") ?? 0;
       this.hold = num("hold") ?? 2000;
-      this.trigger = str("trigger") ?? "auto";
+      this.trigger = str("trigger") ?? "hover";
 
       this._rowTop = rowTop;
       this._rowBottom = rowBottom;
@@ -140,6 +157,8 @@ class AnagramAnimator extends HTMLElement {
    }
 
    _setupHoverTrigger() {
+      if (!this.hasAttribute("tabindex")) this.tabIndex = 0;
+
       const showEnd = () => this.animateTo(1);
       const showStart = () => this.animateTo(0);
 

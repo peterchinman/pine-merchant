@@ -1,3 +1,0 @@
-- Mime Reader
-- Random Word Generator
-- Read Receipts

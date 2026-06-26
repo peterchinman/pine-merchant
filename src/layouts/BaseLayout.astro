@@ -1,64 +1,137 @@
 ---
-import NavigationBar from "../components/NavigationBar.astro";
+import "../styles/reset.css";
+import "../styles/setup.css";
 import "../styles/global.css";
+import "../styles/typography.css";
 
 const {
-   title = "Pine Merchant",
-   description = "Pine Merchant makes software in New York City.",
+  title = "Pine Merchant",
+  description = "Pine Merchant makes software in New York City.",
+  // breadcrumb labels for the top of non-home pages, e.g. ["blog", slug]
+  crumbs,
+  // where the back arrow points (defaults to home)
+  back,
 } = Astro.props;
 
 const homeUrl = import.meta.env.BASE_URL;
+const backHref = back ?? homeUrl;
 ---
 
 <!doctype html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="description" content={description} />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Tiny5&display=swap"
-         rel="stylesheet"
-      />
-      <title>{title}</title>
-   </head>
-   <body>
-      <header class="site-header">
-         <a class="home-link" href={homeUrl}>PINE MERCHANT</a>
-         <NavigationBar />
-      </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Tiny5&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    {
+      crumbs && crumbs.length > 0 && (
+        <header class="site-header">
+          <nav class="site-nav" aria-label="Breadcrumb">
+            <a class="site-nav__back" href={backHref} aria-label="Back">
+              <>
+                <span>&lt;</span>
+                <span class="dash-1">-</span>
+                <span class="dash-2">-</span>
+              </>
+            </a>
+            <span class="site-nav__crumbs">
+              {crumbs.map((label, i) => (
+                <Fragment>
+                  {i > 0 && (
+                    <span class="site-nav__sep" aria-hidden="true">
+                      /
+                    </span>
+                  )}
+                  <span
+                    class={
+                      i === crumbs.length - 1
+                        ? "site-nav__crumb is-last"
+                        : "site-nav__crumb"
+                    }
+                  >
+                    {label}
+                  </span>
+                </Fragment>
+              ))}
+            </span>
+          </nav>
+        </header>
+      )
+    }
 
-      <slot />
-   </body>
+    <slot />
+  </body>
 </html>
 
 <style is:global>
-   .site-header {
-      position: fixed;
-      top: 1rem;
-      left: clamp(1.25rem, 6vw, 5rem);
-      z-index: 20;
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: baseline;
-      gap: clamp(1rem, 3vw, 1.5rem);
-      white-space: nowrap;
-   }
+  .site-header {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 1.5rem);
+    padding-inline: var(--section-gutter);
+    padding-top: 1rem;
+    white-space: nowrap;
+  }
 
-   .home-link {
-      color: var(--link);
-      font-family: var(--font-display);
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      line-height: 1;
-      letter-spacing: 0.02em;
-      text-decoration: none;
-      text-transform: uppercase;
-   }
+  .site-nav {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    min-width: 0;
+    font-family: var(--font-mono);
+    font-size: var(--fontSize-0);
+  }
 
-   .home-link:hover,
-   .home-link:focus-visible {
-      text-decoration: underline;
-   }
+  .site-nav__back {
+    flex: none;
+    font-family: var(--font-display);
+    font-size: var(--fontSize-2);
+    text-decoration: none;
+
+    .dash-1 {
+      margin-left: -.6rem;
+    }
+    .dash-2 {
+      margin-left: -.2rem;
+    }
+  }
+
+  .site-nav__crumbs {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    min-width: 0;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: var(--fontSize-2);
+    text-transform: uppercase;
+  }
+
+  .site-nav__sep {
+    flex: none;
+    color: var(--ink-muted);
+  }
+
+  .site-nav__crumb {
+    flex: none;
+  }
+
+  /* the current page / slug truncates when there isn't room */
+  .site-nav__crumb.is-last {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 </style>

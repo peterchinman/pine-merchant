@@ -18,38 +18,43 @@ const blogUrl = `${import.meta.env.BASE_URL}blog/`;
 <BaseLayout
    title={`${post.title} · Pine Merchant`}
    description={post.description}
+   crumbs={["blog", post.slug]}
+   back={blogUrl}
 >
-   <main>
-      <article class="blog-post">
-         <a class="blog-post__back" href={blogUrl}>← Blog</a>
-
+   <main class="scrollable">
+      <article class="blog-post section">
          <header class="blog-post__header">
-            <p class="blog-post__date">{post.formattedDate}</p>
-            <h1>{post.title}</h1>
+            <p class="blog-post__date quiet-voice">{post.formattedDate}</p>
+            <h1 class="title-voice">{post.title}</h1>
             {
                post.description && (
-                  <p class="blog-post__description">{post.description}</p>
+                  <p class="blog-post__description lead-voice">
+                     {post.description}
+                  </p>
                )
             }
          </header>
 
-         <div class="blog-post__content">
+         <div class="blog-post__content prose">
             <Content />
          </div>
       </article>
    </main>
 </BaseLayout>
 
-<style>
-   .blog-post {
-      max-width: 48rem;
-      padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 6vw, 5rem)
-         clamp(4rem, 8vw, 7rem);
-   }
+<script>
+   import { killOrphans } from "../../scripts/orphan-killer.js";
+   import { initSidenotes } from "../../scripts/sidenotes.js";
 
+   // De-orphan first so sidenotes capture footnote refs from the final DOM.
+   killOrphans();
+   initSidenotes();
+</script>
+
+<style>
    .blog-post__back {
       display: inline-block;
-      margin-bottom: 3rem;
+      justify-self: start;
       color: var(--link);
       text-decoration: none;
    }
@@ -60,30 +65,18 @@ const blogUrl = `${import.meta.env.BASE_URL}blog/`;
       text-decoration: underline;
    }
 
-   .blog-post__header {
-      margin-bottom: 3rem;
-   }
-
    .blog-post__date {
       margin: 0 0 0.75rem;
-      color: var(--accent);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-   }
-
-   .blog-post h1 {
-      margin: 0;
-      font-size: clamp(3rem, 9vw, 6rem);
-      line-height: 0.95;
-      letter-spacing: -0.08em;
+      color: var(--ink-muted);
    }
 
    .blog-post__description {
       margin: 1.5rem 0 0;
-      color: var(--muted);
-      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: var(--ink-muted);
+   }
+
+   .blog-post__content {
+      position: relative;
    }
 
    .blog-post__content :global(*) {
@@ -92,14 +85,51 @@ const blogUrl = `${import.meta.env.BASE_URL}blog/`;
 
    .blog-post__content :global(p),
    .blog-post__content :global(li) {
-      color: var(--muted);
-      font-size: clamp(1.05rem, 2vw, 1.2rem);
+      color: var(--ink-muted);
    }
 
    .blog-post__content :global(h2) {
       margin-top: 2.5rem;
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.05em;
+   }
+
+   /* Footnotes-as-sidenotes (built by sidenotes.js). Laid out as
+      [number | text]. Narrow: hidden by default, revealed on tap. */
+   .blog-post__content :global(.footnote-container) {
+      display: none;
+      grid-template-columns: auto 1fr;
+      column-gap: 0.6rem;
+      align-items: baseline;
+      margin: 0.75rem 0 1.5rem;
+      color: var(--ink-muted);
+      font-family: var(--prose);
+      font-size: var(--fontSize--1);
+      line-height: var(--globalLineHeight);
+   }
+
+   .blog-post__content :global(.footnote-container.is-open) {
+      display: grid;
+   }
+
+   /* the footnote number, in the left column */
+   .blog-post__content :global(.footnote-container)::before {
+      content: attr(data-index);
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+   }
+
+   .blog-post__content :global(.footnote-container p) {
+      margin: 0;
+   }
+
+   /* Wide: always shown, pulled into the right margin (top set by
+      sidenotes.js). Keep this breakpoint in sync with WIDE in sidenotes.js. */
+   @media (min-width: 1300px) {
+      .blog-post__content :global(.footnote-container) {
+         display: grid;
+         position: absolute;
+         left: 100%;
+         width: 16rem;
+         margin: 0 0 0 2.5rem;
+      }
    }
 </style>

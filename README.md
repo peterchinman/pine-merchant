@@ -16,43 +16,6 @@ The site currently builds these routes:
 /blog/first-post/  Example blog post
 ```
 
-## Project structure
-
-```txt
-pine-merchant/
-  src/
-    pages/
-      index.astro
-      about.astro
-      projects.astro
-      blog/
-        index.astro
-        [slug].astro
-    components/
-      NavigationBar.astro
-      IntroSection.astro
-      TimelineSection.astro
-      ProjectsSection.astro
-      ProjectCard.astro
-      BlogPostCard.astro
-      PageHeader.astro
-      SiteFooter.astro
-    layouts/
-      BaseLayout.astro
-    lib/
-      blog.js
-    styles/
-      global.css
-  text/
-    bio.md
-    timeline.md
-    projects.md
-    blog/
-      first-post.md
-  astro.config.mjs
-  package.json
-```
-
 ## Requirements
 
 - Node.js 22 or newer recommended
@@ -68,7 +31,7 @@ From the project root:
 npm install
 ```
 
-If you are setting up from a fresh clone and want to install exactly from `package-lock.json`, use:
+Or, to install exactly from `package-lock.json`, use:
 
 ```sh
 npm ci
@@ -81,34 +44,6 @@ Start the Astro development server:
 ```sh
 npm run dev
 ```
-
-Astro will print a local URL, usually:
-
-```txt
-http://localhost:4321/
-```
-
-Open that URL in your browser.
-
-The dev server watches files automatically, so changes to files in `src/` or `text/` should update the site while it is running.
-
-## Edit content
-
-Markdown content lives in `text/`:
-
-```txt
-text/bio.md
-text/timeline.md
-text/projects.md
-text/blog/*.md
-```
-
-Current content wiring:
-
-- `text/bio.md` is rendered on `/` by `src/components/IntroSection.astro`
-- `text/timeline.md` is rendered on `/about/` by `src/components/TimelineSection.astro`
-- `text/projects.md` is read on `/projects/` by `src/components/ProjectsSection.astro`
-- `text/blog/*.md` files become blog posts at `/blog/[slug]/`
 
 ## Add a blog post
 

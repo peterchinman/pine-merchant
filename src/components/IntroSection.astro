@@ -1,31 +1,22 @@
 ---
 import BioText from "../../text/bio.md";
+import NavigationBar from "./NavigationBar.astro";
 
 const anagramScriptUrl = `${import.meta.env.BASE_URL}scripts/anagram-animator.js`;
 ---
 
-<section class="intro-section" aria-label="Bio">
-   <div class="intro-section__content">
+<section class="section intro-section" aria-label="Bio">
+   <div class="intro-section__content lead-voice">
       <BioText />
    </div>
+   <NavigationBar />
 </section>
 
 <script type="module" src={anagramScriptUrl}></script>
 
 <style>
-   .intro-section {
-      height: 100%;
-      padding: clamp(4rem, 10vw, 7rem) clamp(1.25rem, 6vw, 5rem)
-         clamp(3rem, 8vw, 7rem);
-   }
-
-   .intro-section__content {
-      max-width: 42rem;
-   }
-
    .intro-section :global(p) {
-      color: var(--muted);
-      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: var(--ink-muted);
    }
 
    .intro-section :global(.bio-name) {
@@ -33,6 +24,7 @@ const anagramScriptUrl = `${import.meta.env.BASE_URL}scripts/anagram-animator.js
       position: relative;
       color: var(--ink);
       font-family: var(--font-display);
+      font-size: var(--fontSize-3);
       letter-spacing: 0.02em;
       line-height: 1;
       text-transform: uppercase;

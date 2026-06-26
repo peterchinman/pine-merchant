@@ -3,28 +3,22 @@ import TimelineText from "../../text/timeline.md";
 import LinksText from "../../text/links.md";
 ---
 
-<section class="timeline-section" aria-label="About">
+<section class="section timeline-section" aria-label="About">
    <div class="timeline-section__content">
-      <div class="timeline-section__timeline">
+      <div class="timeline-section__timeline definition-list">
          <TimelineText />
       </div>
 
-      <div class="timeline-section__links">
+      <div class="timeline-section__links definition-list">
          <LinksText />
       </div>
    </div>
 </section>
 
 <style>
-   .timeline-section {
-      height: 100%;
-      padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 6vw, 5rem);
-   }
-
    .timeline-section__content {
       display: grid;
       gap: clamp(2rem, 6vw, 4rem);
-      max-width: 52rem;
    }
 
    .timeline-section :global(dl) {
@@ -41,19 +35,14 @@ import LinksText from "../../text/links.md";
    .timeline-section :global(dd) {
       margin: 0;
       color: var(--ink);
-      font-family: var(--font-body);
-      line-height: 1.5;
    }
 
    .timeline-section :global(dt) {
       grid-column: 1;
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      font-weight: 400;
    }
 
    .timeline-section :global(dd) {
       grid-column: 2;
-      font-size: clamp(1.1rem, 2vw, 1.35rem);
    }
 
    .timeline-section :global(dd p) {

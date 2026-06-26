@@ -1,5 +1,5 @@
 import { defineConfig } from "astro/config";
-import remarkDeflist from "@verikami/remark-deflist-revisited";
+import remarkDeflist from "remark-deflist";
 
 const [owner, repository] = process.env.GITHUB_REPOSITORY?.split("/") ?? [];
 const isGithubActions = process.env.GITHUB_ACTIONS === "true";
