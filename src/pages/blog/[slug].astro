@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { blogPosts } from "../../lib/blog.js";
+
+export function getStaticPaths() {
+   return blogPosts.map((post) => ({
+      params: { slug: post.slug },
+      props: { post },
+   }));
+}
+
+const { post } = Astro.props;
+const Content = post.Content;
+const blogUrl = `${import.meta.env.BASE_URL}blog/`;
+---
+
+<BaseLayout
+   title={`${post.title} · Pine Merchant`}
+   description={post.description}
+>
+   <main>
+      <article class="blog-post">
+         <a class="blog-post__back" href={blogUrl}>← Blog</a>
+
+         <header class="blog-post__header">
+            <p class="blog-post__date">{post.formattedDate}</p>
+            <h1>{post.title}</h1>
+            {
+               post.description && (
+                  <p class="blog-post__description">{post.description}</p>
+               )
+            }
+         </header>
+
+         <div class="blog-post__content">
+            <Content />
+         </div>
+      </article>
+   </main>
+</BaseLayout>
+
+<style>
+   .blog-post {
+      max-width: 48rem;
+      padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 6vw, 5rem)
+         clamp(4rem, 8vw, 7rem);
+   }
+
+   .blog-post__back {
+      display: inline-block;
+      margin-bottom: 3rem;
+      color: var(--link);
+      text-decoration: none;
+   }
+
+   .blog-post__back:hover,
+   .blog-post__back:focus-visible {
+      color: var(--ink);
+      text-decoration: underline;
+   }
+
+   .blog-post__header {
+      margin-bottom: 3rem;
+   }
+
+   .blog-post__date {
+      margin: 0 0 0.75rem;
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+   }
+
+   .blog-post h1 {
+      margin: 0;
+      font-size: clamp(3rem, 9vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+   }
+
+   .blog-post__description {
+      margin: 1.5rem 0 0;
+      color: var(--muted);
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+   }
+
+   .blog-post__content :global(*) {
+      max-width: 100%;
+   }
+
+   .blog-post__content :global(p),
+   .blog-post__content :global(li) {
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.2rem);
+   }
+
+   .blog-post__content :global(h2) {
+      margin-top: 2.5rem;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+   }
+</style>

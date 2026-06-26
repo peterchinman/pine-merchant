@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Pine Merchant</title>
+      <link rel="stylesheet" href="style.css" />
+   </head>
+   <body>
+      <main id="site-content">
+         <section
+            id="pine-merchant"
+            class="section section--intro"
+            data-md="text/pine-merchant.md"
+         ></section>
+
+         <section
+            id="projects"
+            class="section section--projects"
+            data-md="text/projects.md"
+         ></section>
+      </main>
+
+      <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+      <script>
+         async function renderMarkdownSections() {
+            const sections = document.querySelectorAll("[data-md]");
+
+            for (const section of sections) {
+               const source = section.dataset.md;
+               section.classList.add("is-loading");
+
+               try {
+                  const response = await fetch(source);
+
+                  if (!response.ok) {
+                     throw new Error(
+                        `Could not load ${source}: ${response.status}`,
+                     );
+                  }
+
+                  const markdown = await response.text();
+                  section.innerHTML = marked.parse(markdown);
+                  section.classList.remove("is-loading");
+                  section.classList.add("is-loaded");
+               } catch (error) {
+                  console.error(error);
+                  section.classList.remove("is-loading");
+                  section.classList.add("has-error");
+                  section.innerHTML = `<p>Could not load <code>${source}</code>.</p>`;
+               }
+            }
+         }
+
+         renderMarkdownSections();
+      </script>
+   </body>
+</html>

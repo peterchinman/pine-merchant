@@ -1,0 +1,75 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+import projectsText from "../../text/projects.md?raw";
+
+function parseProjectLine(line) {
+   const match = line.match(
+      /^\s*-\s+(?:\[(?<linkedTitle>[^\]]+)\]\((?<href>[^)]+)\)|(?<title>.+?))\s*$/,
+   );
+
+   if (!match?.groups) {
+      return null;
+   }
+
+   return {
+      title: match.groups.linkedTitle ?? match.groups.title,
+      href: match.groups.href,
+   };
+}
+
+const projects = projectsText
+   .split(/\r?\n/)
+   .map(parseProjectLine)
+   .filter(Boolean);
+---
+
+<section
+   id="projects"
+   class="projects-section"
+   aria-labelledby="projects-heading"
+>
+   <div class="projects-section__header">
+      <p class="projects-section__label">Selected work</p>
+      <h2 id="projects-heading">Projects</h2>
+   </div>
+
+   <div class="projects-section__list" aria-label="Projects">
+      {
+         projects.map((project) => (
+            <ProjectCard title={project.title} href={project.href} />
+         ))
+      }
+   </div>
+</section>
+
+<style>
+   .projects-section {
+      padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 6vw, 5rem);
+      background: var(--bg);
+      color: var(--ink);
+   }
+
+   .projects-section__header,
+   .projects-section__list {
+      max-width: 56rem;
+   }
+
+   .projects-section__label {
+      margin: 0 0 0.75rem;
+      color: var(--ink);
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+   }
+
+   .projects-section h2 {
+      margin: 0 0 2rem;
+      font-size: clamp(2rem, 7vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+   }
+
+   .projects-section__list {
+      display: grid;
+   }
+</style>

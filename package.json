@@ -1,0 +1,19 @@
+{
+   "name": "pine-merchant",
+   "version": "1.0.0",
+   "scripts": {
+      "dev": "astro dev",
+      "build": "astro build",
+      "preview": "astro preview"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "description": "",
+   "type": "module",
+   "dependencies": {
+      "@astrojs/markdown-remark": "^7.2.0",
+      "@verikami/remark-deflist-revisited": "^0.6.6",
+      "astro": "^7.0.3"
+   }
+}

@@ -1,0 +1,45 @@
+---
+const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+   ? import.meta.env.BASE_URL
+   : `${import.meta.env.BASE_URL}/`;
+
+function withBase(path = "") {
+   return `${baseUrl}${path.replace(/^\//, "")}`;
+}
+
+const links = [
+   { href: withBase("about/"), label: "about" },
+   { href: withBase("projects/"), label: "project" },
+   { href: withBase("blog/"), label: "blog" },
+];
+---
+
+<nav class="navigation-bar" aria-label="Primary navigation">
+   {links.map((link) => <a href={link.href}>{link.label}</a>)}
+</nav>
+
+<style>
+   .navigation-bar {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      gap: 0.75rem;
+      margin: 0;
+      color: var(--link);
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      text-transform: none;
+   }
+
+   .navigation-bar a {
+      color: inherit;
+      text-decoration: none;
+   }
+
+   .navigation-bar a:hover,
+   .navigation-bar a:focus-visible {
+      color: var(--ink);
+      text-decoration: underline;
+   }
+</style>

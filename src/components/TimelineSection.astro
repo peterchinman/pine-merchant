@@ -1,0 +1,94 @@
+---
+import TimelineText from "../../text/timeline.md";
+import LinksText from "../../text/links.md";
+---
+
+<section class="timeline-section" aria-label="About">
+   <div class="timeline-section__content">
+      <div class="timeline-section__timeline">
+         <TimelineText />
+      </div>
+
+      <div class="timeline-section__links">
+         <LinksText />
+      </div>
+   </div>
+</section>
+
+<style>
+   .timeline-section {
+      height: 100%;
+      padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 6vw, 5rem);
+   }
+
+   .timeline-section__content {
+      display: grid;
+      gap: clamp(2rem, 6vw, 4rem);
+      max-width: 52rem;
+   }
+
+   .timeline-section :global(dl) {
+      display: grid;
+      grid-template-columns: clamp(7rem, 18vw, 10rem) minmax(0, 1fr);
+      column-gap: clamp(1rem, 4vw, 2rem);
+      row-gap: 1rem;
+      align-items: baseline;
+      margin: 0;
+      color: var(--ink);
+   }
+
+   .timeline-section :global(dt),
+   .timeline-section :global(dd) {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.5;
+   }
+
+   .timeline-section :global(dt) {
+      grid-column: 1;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 400;
+   }
+
+   .timeline-section :global(dd) {
+      grid-column: 2;
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+   }
+
+   .timeline-section :global(dd p) {
+      margin: 0;
+   }
+
+   .timeline-section__links {
+      padding-top: clamp(1rem, 3vw, 2rem);
+   }
+
+   .timeline-section__links :global(dt) {
+      font-family: var(--font-display);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+   }
+
+   .timeline-section__links :global(dd p) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+   }
+
+   @media (max-width: 640px) {
+      .timeline-section :global(dl) {
+         grid-template-columns: 1fr;
+         row-gap: 0.25rem;
+      }
+
+      .timeline-section :global(dd) {
+         grid-column: 1;
+         margin-bottom: 0.75rem;
+      }
+
+      .timeline-section__links :global(dd) {
+         margin-bottom: 0;
+      }
+   }
+</style>

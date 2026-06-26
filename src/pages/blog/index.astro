@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import PageHeader from "../../components/PageHeader.astro";
+import BlogPostCard from "../../components/BlogPostCard.astro";
+
+import { blogPosts } from "../../lib/blog.js";
+---
+
+<BaseLayout
+   title="Blog · Pine Merchant"
+   description="Writing and notes from Pine Merchant."
+>
+   <main>
+      <PageHeader label="Blog" title="Writing" />
+
+      <section class="blog-index" aria-label="Blog posts">
+         {
+            blogPosts.length > 0 ? (
+               blogPosts.map((post) => <BlogPostCard post={post} />)
+            ) : (
+               <p>No posts yet.</p>
+            )
+         }
+      </section>
+   </main>
+</BaseLayout>
+
+<style>
+   .blog-index {
+      max-width: 56rem;
+      padding: 0 clamp(1.25rem, 6vw, 5rem) clamp(4rem, 8vw, 7rem);
+   }
+
+   .blog-index p {
+      color: var(--muted);
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+   }
+</style>

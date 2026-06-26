@@ -1,0 +1,54 @@
+---
+import BioText from "../../text/bio.md";
+
+const anagramScriptUrl = `${import.meta.env.BASE_URL}scripts/anagram-animator.js`;
+---
+
+<section class="intro-section" aria-label="Bio">
+   <div class="intro-section__content">
+      <BioText />
+   </div>
+</section>
+
+<script type="module" src={anagramScriptUrl}></script>
+
+<style>
+   .intro-section {
+      height: 100%;
+      padding: clamp(4rem, 10vw, 7rem) clamp(1.25rem, 6vw, 5rem)
+         clamp(3rem, 8vw, 7rem);
+   }
+
+   .intro-section__content {
+      max-width: 42rem;
+   }
+
+   .intro-section :global(p) {
+      color: var(--muted);
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+   }
+
+   .intro-section :global(.bio-name) {
+      display: inline-grid;
+      position: relative;
+      color: var(--ink);
+      font-family: var(--font-display);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      text-transform: uppercase;
+      vertical-align: baseline;
+      white-space: pre;
+      cursor: default;
+   }
+
+   .intro-section :global(.bio-name [data-role]) {
+      grid-area: 1 / 1;
+      white-space: pre;
+   }
+
+   .intro-section :global(.bio-name .aa-letter),
+   .intro-section :global(.bio-name .aa-space) {
+      display: inline-block;
+      white-space: pre;
+   }
+</style>
