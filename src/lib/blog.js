@@ -42,6 +42,7 @@ export const blogPosts = Object.entries(postModules)
          slug,
          url: withBase(`blog/${slug}/`),
          title: frontmatter.title ?? slug,
+         subtitle: frontmatter.subtitle ?? "",
          description: frontmatter.description ?? "",
          date,
          dateValue,

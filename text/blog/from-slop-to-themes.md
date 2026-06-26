@@ -5,7 +5,7 @@ tags:
   - macro
   - design
   - theme
-coolness: 4
+coolness: 3
 date: 2024-12-30
 ---   
 

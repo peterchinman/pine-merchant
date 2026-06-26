@@ -28,6 +28,11 @@ const blogUrl = withBase("blog/");
             <p class="blog-post__date quiet-voice">{post.formattedDate}</p>
             <h1 class="title-voice">{post.title}</h1>
             {
+               post.subtitle && (
+                  <p class="blog-post__subtitle">{post.subtitle}</p>
+               )
+            }
+            {
                post.description && (
                   <p class="blog-post__description lead-voice">
                      {post.description}
@@ -69,6 +74,14 @@ const blogUrl = withBase("blog/");
    .blog-post__date {
       margin: 0 0 0.75rem;
       color: var(--ink-muted);
+   }
+
+   .blog-post__subtitle {
+      margin: 1.25rem 0 0;
+      color: var(--ink-muted);
+      font-family: var(--font-sans);
+      font-style: italic;
+      font-size: var(--fontSize-1);
    }
 
    .blog-post__description {
