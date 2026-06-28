@@ -5,7 +5,6 @@
 :root {
   /* semantic font families (aliases over the families in global.css) */
   --heading: var(--font-display); /* Tiny5 */
-  --body-copy: var(--font-mono); /* IBM Plex Mono */
   --prose: var(--font-sans); /* IBM Plex Sans — long-form reading */
 
   --globalLineHeight: 1.5;
@@ -23,15 +22,6 @@
 
 /* ---- voices ---- */
 
-.loud-voice {
-  /* hero / page titles */
-  font-family: var(--heading);
-  font-size: clamp(var(--fontSize-4), 10vw, var(--fontSize-6));
-  line-height: 0.9;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
 .title-voice {
   /* section headings */
   font-family: var(--font-sans);
@@ -44,18 +34,17 @@
 
 .attention-voice,
 .prose :is(h2, h3) {
-  /* card titles, sub-headings, in-prose headings */
+  /* card titles */
   font-family: var(--font-sans);
-  font-size: clamp(var(--fontSize-1), 4vw, var(--fontSize-4));
+  font-size: var(--fontSize-2);
   line-height: 1.05;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
   /*text-transform: uppercase;*/
 }
 
-.lead-voice,
-.definition-list dd {
+.plain-voice {
   /* intro paragraphs, descriptions */
-  font-family: var(--body-copy);
+  font-family: var(--body-mono);
   font-size: var(--fontSize-0);
   line-height: var(--globalLineHeight);
 
@@ -64,18 +53,17 @@
   }
 }
 
-.body-copy,
-.definition-list dt {
-  /* default body text */
-  font-family: var(--body-copy);
+.soft-reading-voice {
+  font-family: var(--prose);
   font-size: var(--fontSize-0);
   line-height: var(--globalLineHeight);
 }
 
 .quiet-voice {
   /* labels, dates, eyebrows */
-  font-family: var(--body-copy);
+  font-family: var(--body-mono);
   font-size: var(--fontSize--1);
+  font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }

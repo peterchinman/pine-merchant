@@ -24,8 +24,8 @@
 
   /* Shared section layout — values change at the breakpoints below */
   --section-gutter: 0.8rem;
-  --section-pad-block: 0.8rem;
-  --section-row-gap: clamp(1.5rem, 4vw, 2.5rem);
+  --section-pad-block: 2rem;
+  --section-row-gap: 2rem;
   --section-max: 56rem;
 }
 

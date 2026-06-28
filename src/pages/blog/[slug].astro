@@ -19,7 +19,7 @@ const blogUrl = withBase("blog/");
 <BaseLayout
    title={`${post.title} · Pine Merchant`}
    description={post.description}
-   crumbs={["blog", post.slug]}
+   crumbs={[{ label: "blog", href: blogUrl }, post.slug]}
    back={blogUrl}
 >
    <main class="scrollable">
@@ -34,7 +34,7 @@ const blogUrl = withBase("blog/");
             }
             {
                post.description && (
-                  <p class="blog-post__description lead-voice">
+                  <p class="blog-post__description plain-voice">
                      {post.description}
                   </p>
                )

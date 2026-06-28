@@ -1,36 +1,42 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-
-import PageHeader from "../../components/PageHeader.astro";
 import BlogPostCard from "../../components/BlogPostCard.astro";
 
 import { blogPosts } from "../../lib/blog.js";
 ---
 
 <BaseLayout
-   title="Blog · Pine Merchant"
-   description="Writing and notes from Pine Merchant."
-   crumbs={["blog"]}
+  title="Blog · Pine Merchant"
+  description="Writing and notes from Pine Merchant."
+  crumbs={["blog"]}
 >
-   <main class="scrollable">
-      <section class="section" aria-label="Blog posts">
-         <PageHeader label="Blog" title="Blog" />
-
-         <div class="blog-index">
-            {
-               blogPosts.length > 0 ? (
-                  blogPosts.map((post) => <BlogPostCard post={post} />)
-               ) : (
-                  <p class="lead-voice">No posts yet.</p>
-               )
-            }
-         </div>
-      </section>
-   </main>
+  <main class="scrollable">
+    <section class="section" aria-label="Blog posts">
+      <div class="blog-index">
+        {
+          blogPosts.length > 0 ? (
+            blogPosts.map((post) => <BlogPostCard post={post} />)
+          ) : (
+            <p class="plain-voice">No posts yet.</p>
+          )
+        }
+      </div>
+    </section>
+  </main>
 </BaseLayout>
 
 <style>
-   .blog-index p {
-      color: var(--ink-muted);
-   }
+  /* Shared columns for every card: the date column sizes to the longest
+      date (letter-spacing and all), titles align in the second column.
+      Cards opt into these tracks via grid-template-columns: subgrid. */
+  .blog-index {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 1rem;
+  }
+
+  .blog-index p {
+    grid-column: 1 / -1;
+    color: var(--ink-muted);
+  }
 </style>

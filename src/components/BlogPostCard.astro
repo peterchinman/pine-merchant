@@ -7,8 +7,8 @@ const { post } = Astro.props;
    <span class="blog-post-card__body">
       <span class="blog-post-card__title attention-voice">{post.title}</span>
       {
-         post.description && (
-            <span class="blog-post-card__description">{post.description}</span>
+         post.subtitle && (
+            <span class="blog-post-card__description soft-reading-voice">{post.subtitle}</span>
          )
       }
    </span>
@@ -17,8 +17,9 @@ const { post } = Astro.props;
 <style>
    .blog-post-card {
       display: grid;
-      grid-template-columns: minmax(8rem, 0.3fr) 1fr;
-      gap: 1rem;
+      grid-column: 1 / -1;
+      grid-template-columns: subgrid;
+      align-items: start;
       padding: 1.25rem 0;
       color: var(--link);
       text-decoration: none;
@@ -26,6 +27,7 @@ const { post } = Astro.props;
 
    .blog-post-card__date {
       color: var(--ink-muted);
+      padding-top: .3rem;
    }
 
    .blog-post-card__body {
@@ -38,9 +40,10 @@ const { post } = Astro.props;
    }
 
    @media (max-width: 700px) {
+      /* break out of the shared columns: stack date above body */
       .blog-post-card {
          grid-template-columns: 1fr;
-         gap: 0.35rem;
+         row-gap: 0.35rem;
       }
    }
 </style>

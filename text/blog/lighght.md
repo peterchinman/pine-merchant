@@ -9,9 +9,8 @@ tags:
   - featured
   - language
 coolness: 7
-date: 2024-12-30
+date: 2024-09-30
 ---
-# A Silent Letter Detector
 
 At [Recurse](https://www.recurse.com/), there's a weekly Creative Coding group. We meet up, a theme is announced, and everyone spends two hours working on a small creative coding project related to the theme.
 

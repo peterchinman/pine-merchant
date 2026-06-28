@@ -8,7 +8,7 @@ const links = [
 ];
 ---
 
-<nav class="navigation-bar body-copy" aria-label="Primary navigation">
+<nav class="navigation-bar" aria-label="Primary navigation">
   <ul>
     {
       links.map((link) => (
@@ -22,10 +22,17 @@ const links = [
 
 <style>
   .navigation-bar ul {
+    font-family: var(--font-display);
+    font-size: var(--fontSize-2);
+    text-transform: uppercase;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    gap: 0.25rem;
+    justify-content: space-between;
+    /* rem, not ch: ch is measured in the (late-loading) display font, which
+       made the container width shift on font swap. 41.25rem == the old 55ch. */
+    max-width: 41.25rem;
+    gap: 2rem;
   }
 
   .navigation-bar a {

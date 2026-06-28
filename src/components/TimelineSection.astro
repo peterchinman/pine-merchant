@@ -4,23 +4,16 @@ import LinksText from "../../text/links.md";
 ---
 
 <section class="section timeline-section" aria-label="About">
-   <div class="timeline-section__content">
-      <div class="timeline-section__timeline definition-list">
+      <div class="timeline-section__timeline plain-voice">
          <TimelineText />
       </div>
 
-      <div class="timeline-section__links definition-list">
+      <div class="timeline-section__links plain-voice">
          <LinksText />
       </div>
-   </div>
 </section>
 
 <style>
-   .timeline-section__content {
-      display: grid;
-      gap: clamp(2rem, 6vw, 4rem);
-   }
-
    .timeline-section :global(dl) {
       display: grid;
       grid-template-columns: clamp(7rem, 18vw, 10rem) minmax(0, 1fr);
@@ -50,34 +43,18 @@ import LinksText from "../../text/links.md";
    }
 
    .timeline-section__links {
-      padding-top: clamp(1rem, 3vw, 2rem);
-   }
-
-   .timeline-section__links :global(dt) {
-      font-family: var(--font-display);
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-   }
-
-   .timeline-section__links :global(dd p) {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-   }
-
-   @media (max-width: 640px) {
-      .timeline-section :global(dl) {
-         grid-template-columns: 1fr;
-         row-gap: 0.25rem;
+      :global(h1) {
+        font-family: var(--body-mono);
+        font-size: var(--fontSize--1);
+        font-weight: 400;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
       }
 
-      .timeline-section :global(dd) {
-         grid-column: 1;
-         margin-bottom: 0.75rem;
-      }
-
-      .timeline-section__links :global(dd) {
-         margin-bottom: 0;
+      :global(ul) {
+        display: flex;
+        gap: 1ch;
+        padding-top: .5rem;
       }
    }
 </style>

@@ -1,16 +1,14 @@
 ---
 import BioText from "../../text/bio.md";
-import NavigationBar from "./NavigationBar.astro";
 import { withBase } from "../lib/base.js";
 
 const anagramScriptUrl = withBase("scripts/anagram-animator.js");
 ---
 
 <section class="section intro-section" aria-label="Bio">
-   <div class="intro-section__content lead-voice">
+   <div class="intro-section__content plain-voice">
       <BioText />
    </div>
-   <NavigationBar />
 </section>
 
 <script type="module" src={anagramScriptUrl}></script>

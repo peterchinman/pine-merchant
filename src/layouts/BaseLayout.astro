@@ -4,6 +4,7 @@ import "../styles/setup.css";
 import "../styles/global.css";
 import "../styles/typography.css";
 import { withBase } from "../lib/base.js";
+import NavigationBar from "../components/NavigationBar.astro";
 
 const {
   title = "Pine Merchant",
@@ -33,9 +34,9 @@ const backHref = back ?? homeUrl;
     <title>{title}</title>
   </head>
   <body>
-    {
-      crumbs && crumbs.length > 0 && (
-        <header class="site-header">
+    <header class="site-header">
+      {
+        crumbs && crumbs.length > 0 ? (
           <nav class="site-nav" aria-label="Breadcrumb">
             <a class="site-nav__back" href={backHref} aria-label="Back">
               <>
@@ -45,29 +46,40 @@ const backHref = back ?? homeUrl;
               </>
             </a>
             <span class="site-nav__crumbs">
-              {crumbs.map((label, i) => (
-                <Fragment>
-                  {i > 0 && (
-                    <span class="site-nav__sep" aria-hidden="true">
-                      /
-                    </span>
-                  )}
-                  <span
-                    class={
-                      i === crumbs.length - 1
-                        ? "site-nav__crumb is-last"
-                        : "site-nav__crumb"
-                    }
-                  >
-                    {label}
-                  </span>
-                </Fragment>
-              ))}
+              {crumbs.map((crumb, i) => {
+                const label = typeof crumb === "string" ? crumb : crumb.label;
+                const href = typeof crumb === "string" ? undefined : crumb.href;
+                const isLast = i === crumbs.length - 1;
+                return (
+                  <Fragment>
+                    {i > 0 && (
+                      <span class="site-nav__sep" aria-hidden="true">
+                        /
+                      </span>
+                    )}
+                    {href && !isLast ? (
+                      <a class="site-nav__crumb" href={href}>
+                        {label}
+                      </a>
+                    ) : (
+                      <span
+                        class={
+                          isLast ? "site-nav__crumb is-last" : "site-nav__crumb"
+                        }
+                      >
+                        {label}
+                      </span>
+                    )}
+                  </Fragment>
+                );
+              })}
             </span>
           </nav>
-        </header>
-      )
-    }
+        ) : (
+          <NavigationBar />
+        )
+      }
+    </header>
 
     <slot />
   </body>
@@ -75,10 +87,6 @@ const backHref = back ?? homeUrl;
 
 <style is:global>
   .site-header {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: clamp(1rem, 3vw, 1.5rem);
     padding-inline: var(--section-gutter);
     padding-top: 1rem;
     white-space: nowrap;
@@ -97,13 +105,14 @@ const backHref = back ?? homeUrl;
     flex: none;
     font-family: var(--font-display);
     font-size: var(--fontSize-2);
+    color: var(--link);
     text-decoration: none;
 
     .dash-1 {
-      margin-left: -.6rem;
+      margin-left: -0.6rem;
     }
     .dash-2 {
-      margin-left: -.2rem;
+      margin-left: -0.2rem;
     }
   }
 
@@ -125,10 +134,17 @@ const backHref = back ?? homeUrl;
 
   .site-nav__crumb {
     flex: none;
+    color: var(--link);
+  }
+
+  a.site-nav__crumb:hover,
+  a.site-nav__crumb:focus-visible {
+    text-decoration: underline;
   }
 
   /* the current page / slug truncates when there isn't room */
   .site-nav__crumb.is-last {
+    color: var(--ink);
     flex: 0 1 auto;
     min-width: 0;
     overflow: hidden;
