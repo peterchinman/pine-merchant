@@ -34,54 +34,70 @@ const backHref = back ?? homeUrl;
     <title>{title}</title>
   </head>
   <body>
-    <header class="site-header">
-      {
-        crumbs && crumbs.length > 0 ? (
-          <nav class="site-nav" aria-label="Breadcrumb">
-            <a class="site-nav__back" href={backHref} aria-label="Back">
-              <>
-                <span>&lt;</span>
-                <span class="dash-1">-</span>
-                <span class="dash-2">-</span>
-              </>
-            </a>
-            <span class="site-nav__crumbs">
-              {crumbs.map((crumb, i) => {
-                const label = typeof crumb === "string" ? crumb : crumb.label;
-                const href = typeof crumb === "string" ? undefined : crumb.href;
-                const isLast = i === crumbs.length - 1;
-                return (
-                  <Fragment>
-                    {i > 0 && (
-                      <span class="site-nav__sep" aria-hidden="true">
-                        /
-                      </span>
-                    )}
-                    {href && !isLast ? (
-                      <a class="site-nav__crumb" href={href}>
-                        {label}
-                      </a>
-                    ) : (
-                      <span
-                        class={
-                          isLast ? "site-nav__crumb is-last" : "site-nav__crumb"
-                        }
-                      >
-                        {label}
-                      </span>
-                    )}
-                  </Fragment>
-                );
-              })}
-            </span>
-          </nav>
-        ) : (
-          <NavigationBar />
-        )
-      }
-    </header>
+    {
+      crumbs && crumbs.length > 0 && (
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Breadcrumb">
+          <a class="site-nav__back" href={backHref} aria-label="Back">
+            <>
+              <span>&lt;</span>
+              <span class="dash-1">-</span>
+              <span class="dash-2">-</span>
+            </>
+          </a>
+          <span class="site-nav__crumbs">
+            {crumbs.map((crumb, i) => {
+              const label = typeof crumb === "string" ? crumb : crumb.label;
+              const href = typeof crumb === "string" ? undefined : crumb.href;
+              const anagram =
+                typeof crumb === "string" ? undefined : crumb.anagram;
+              const isLast = i === crumbs.length - 1;
+              // only deeper crumbs (e.g. a long slug) truncate; the first-level
+              // crumb stays un-clipped so its hover animation isn't cut off
+              const truncate = isLast && i > 0;
+              const content = anagram ? (
+                <anagram-animator into={anagram} enter-delay={500} tabindex="-1">
+                  {label}
+                </anagram-animator>
+              ) : (
+                label
+              );
+              return (
+                <Fragment>
+                  {i > 0 && (
+                    <span class="site-nav__sep" aria-hidden="true">
+                      /
+                    </span>
+                  )}
+                  {href && !isLast ? (
+                    <a class="site-nav__crumb" href={href}>
+                      {content}
+                    </a>
+                  ) : (
+                    <span
+                      class:list={[
+                        "site-nav__crumb",
+                        { "is-last": isLast, "is-truncate": truncate },
+                      ]}
+                    >
+                      {content}
+                    </span>
+                  )}
+                </Fragment>
+              );
+            })}
+          </span>
+        </nav>
+      </header>
+    )
+  }
 
     <slot />
+
+    <script
+      type="module"
+      src={withBase("scripts/anagram-animator.js")}
+    ></script>
   </body>
 </html>
 
@@ -142,9 +158,15 @@ const backHref = back ?? homeUrl;
     text-decoration: underline;
   }
 
-  /* the current page / slug truncates when there isn't room */
+  /* the current page (last crumb) */
   .site-nav__crumb.is-last {
     color: var(--ink);
+  }
+
+  /* a deeper crumb (e.g. a long slug) truncates when there isn't room.
+     Kept off the first-level crumb so overflow: hidden doesn't clip its
+     hover animation. */
+  .site-nav__crumb.is-truncate {
     flex: 0 1 auto;
     min-width: 0;
     overflow: hidden;

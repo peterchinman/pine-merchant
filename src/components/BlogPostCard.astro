@@ -20,9 +20,12 @@ const { post } = Astro.props;
       grid-column: 1 / -1;
       grid-template-columns: subgrid;
       align-items: start;
-      padding: 1.25rem 0;
       color: var(--link);
       text-decoration: none;
+   }
+
+   .blog-post-card + .blog-post-card {
+      padding-top: 2rem;
    }
 
    .blog-post-card__date {

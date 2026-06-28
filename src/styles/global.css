@@ -123,6 +123,26 @@ svg {
   max-width: 100%;
 }
 
+/* Structural styles the anagram-animator needs to morph (the two rows stack
+   in one grid cell; letters are inline-block so they can be transformed). */
+anagram-animator {
+  display: inline-grid;
+  position: relative;
+  white-space: pre;
+  vertical-align: baseline;
+}
+
+anagram-animator [data-role] {
+  grid-area: 1 / 1;
+  white-space: pre;
+}
+
+anagram-animator .aa-letter,
+anagram-animator .aa-space {
+  display: inline-block;
+  white-space: pre;
+}
+
 main {
   flex: 1;
   min-height: 0;

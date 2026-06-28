@@ -2,9 +2,9 @@
 import { withBase } from "../lib/base.js";
 
 const links = [
-  { href: withBase("about/"), label: "about" },
-  { href: withBase("projects/"), label: "projects" },
-  { href: withBase("blog/"), label: "blog" },
+  { href: withBase("biography/"), label: "biography", anagram: "YAH PIG ORB" },
+  { href: withBase("projects/"), label: "projects", anagram: "CROP JETS" },
+  { href: withBase("blog/"), label: "blog", anagram: "GLOB" },
 ];
 ---
 
@@ -13,7 +13,11 @@ const links = [
     {
       links.map((link) => (
         <li>
-          <a href={link.href}>{link.label}</a>
+          <a href={link.href}>
+            <anagram-animator into={link.anagram} enter-delay="1000"  tabindex="-1">
+              {link.label}
+            </anagram-animator>
+          </a>
         </li>
       ))
     }
@@ -33,6 +37,10 @@ const links = [
        made the container width shift on font swap. 41.25rem == the old 55ch. */
     max-width: 41.25rem;
     gap: 2rem;
+
+    @media (max-width: 640) {
+      flex-direction: column;
+    }
   }
 
   .navigation-bar a {

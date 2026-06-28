@@ -61,6 +61,7 @@ const OBSERVED_ATTRS = [
    "scale-peak",
    "duration-jitter",
    "hold",
+   "enter-delay",
    "trigger",
 ];
 
@@ -138,6 +139,7 @@ class AnagramAnimator extends HTMLElement {
       this.scalePeak = num("scale-peak") ?? 1.15;
       this.durationJitter = num("duration-jitter") ?? 0;
       this.hold = num("hold") ?? 2000;
+      this.enterDelay = num("enter-delay") ?? 100;
       this.trigger = str("trigger") ?? "hover";
 
       this._rowTop = rowTop;
@@ -159,16 +161,31 @@ class AnagramAnimator extends HTMLElement {
    _setupHoverTrigger() {
       if (!this.hasAttribute("tabindex")) this.tabIndex = 0;
 
+      // Wait out a short delay before morphing, so a quick pass over the name
+      // doesn't fire the animation. Leaving before the delay cancels it.
+      const pointerEnter = () => {
+         clearTimeout(this._enterTimer);
+         this._enterTimer = setTimeout(
+            () => this.animateTo(1),
+            this.enterDelay,
+         );
+      };
       const showEnd = () => this.animateTo(1);
-      const showStart = () => this.animateTo(0);
+      const showStart = () => {
+         clearTimeout(this._enterTimer);
+         this._enterTimer = null;
+         this.animateTo(0);
+      };
 
-      this.addEventListener("pointerenter", showEnd);
+      this.addEventListener("pointerenter", pointerEnter);
       this.addEventListener("focusin", showEnd);
       this.addEventListener("pointerleave", showStart);
       this.addEventListener("focusout", showStart);
 
       this._removeHoverListeners = () => {
-         this.removeEventListener("pointerenter", showEnd);
+         clearTimeout(this._enterTimer);
+         this._enterTimer = null;
+         this.removeEventListener("pointerenter", pointerEnter);
          this.removeEventListener("focusin", showEnd);
          this.removeEventListener("pointerleave", showStart);
          this.removeEventListener("focusout", showStart);
