@@ -1,8 +1,8 @@
 2025-
-: Software Engineer at Macro
+: Software Engineer at [Macro](https://macro.com/)
 
 2024
-: Recurse Center
+: Making language tools at [Recurse Center](https://www.recurse.com/)
 
 2017-2023
-: [Poet, sculptor](https://enchanterimp.com)
+: Full-time [poet, sculptor](https://peterchinman.com)

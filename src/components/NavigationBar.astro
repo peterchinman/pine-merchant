@@ -10,17 +10,21 @@ const links = [
 
 <nav class="navigation-bar" aria-label="Primary navigation">
   <ul>
-    {
-      links.map((link) => (
-        <li>
-          <a href={link.href}>
-            <anagram-animator into={link.anagram} enter-delay="1000"  tabindex="-1">
-              {link.label}
-            </anagram-animator>
-          </a>
-        </li>
-      ))
-    }
+    {links.map((link) => (
+      <li>
+        <a href={link.href}>
+          {/* a tap here navigates, so a morph would start and get cut off */}
+          <anagram-animator
+            into={link.anagram}
+            enter-delay="0"
+            tabindex="-1"
+            ignore-touch
+          >
+            {link.label}
+          </anagram-animator>
+        </a>
+      </li>
+    ))}
   </ul>
 </nav>
 
@@ -45,11 +49,11 @@ const links = [
 
   .navigation-bar a {
     text-decoration: none;
+    padding-inline: 0.5rem;
   }
 
   .navigation-bar a:hover,
   .navigation-bar a:focus-visible {
     color: var(--ink);
-    text-decoration: underline;
   }
 </style>

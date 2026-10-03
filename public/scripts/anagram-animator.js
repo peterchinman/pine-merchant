@@ -161,16 +161,25 @@ class AnagramAnimator extends HTMLElement {
    _setupHoverTrigger() {
       if (!this.hasAttribute("tabindex")) this.tabIndex = 0;
 
+      // `ignore-touch`: touch input doesn't trigger the morph. That means
+      // ignoring touch pointers, and also the focus a tap hands to the element,
+      // so focus only counts when it's keyboard focus (:focus-visible).
+      const ignoresTouch = () => this.hasAttribute("ignore-touch");
+
       // Wait out a short delay before morphing, so a quick pass over the name
       // doesn't fire the animation. Leaving before the delay cancels it.
-      const pointerEnter = () => {
+      const pointerEnter = (event) => {
+         if (ignoresTouch() && event.pointerType === "touch") return;
          clearTimeout(this._enterTimer);
          this._enterTimer = setTimeout(
             () => this.animateTo(1),
             this.enterDelay,
          );
       };
-      const showEnd = () => this.animateTo(1);
+      const showEnd = (event) => {
+         if (ignoresTouch() && !event.target.matches(":focus-visible")) return;
+         this.animateTo(1);
+      };
       const showStart = () => {
          clearTimeout(this._enterTimer);
          this._enterTimer = null;

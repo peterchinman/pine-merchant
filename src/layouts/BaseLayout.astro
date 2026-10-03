@@ -34,8 +34,7 @@ const backHref = back ?? homeUrl;
     <title>{title}</title>
   </head>
   <body>
-    {
-      crumbs && crumbs.length > 0 && (
+    {crumbs && crumbs.length > 0 && (
       <header class="site-header">
         <nav class="site-nav" aria-label="Breadcrumb">
           <a class="site-nav__back" href={backHref} aria-label="Back">
@@ -55,8 +54,14 @@ const backHref = back ?? homeUrl;
               // only deeper crumbs (e.g. a long slug) truncate; the first-level
               // crumb stays un-clipped so its hover animation isn't cut off
               const truncate = isLast && i > 0;
+              const isLink = href && !isLast;
               const content = anagram ? (
-                <anagram-animator into={anagram} enter-delay={500} tabindex="-1">
+                <anagram-animator
+                  into={anagram}
+                  enter-delay={250}
+                  tabindex="-1"
+                  ignore-touch={isLink}
+                >
                   {label}
                 </anagram-animator>
               ) : (
@@ -69,7 +74,7 @@ const backHref = back ?? homeUrl;
                       /
                     </span>
                   )}
-                  {href && !isLast ? (
+                  {isLink ? (
                     <a class="site-nav__crumb" href={href}>
                       {content}
                     </a>
@@ -89,8 +94,7 @@ const backHref = back ?? homeUrl;
           </span>
         </nav>
       </header>
-    )
-  }
+    )}
 
     <slot />
 
