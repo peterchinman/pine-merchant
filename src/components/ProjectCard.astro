@@ -3,15 +3,13 @@ const { title, href } = Astro.props;
 const Tag = href ? "a" : "article";
 ---
 
-<Tag class="project-card" href={href}>
+<Tag
+   class="project-card"
+   href={href}
+   target={href ? "_blank" : undefined}
+   rel={href ? "noopener noreferrer" : undefined}
+>
    <span class="project-card__title attention-voice">{title}</span>
-   {
-      href && (
-         <span class="project-card__arrow attention-voice" aria-hidden="true">
-            →
-         </span>
-      )
-   }
 </Tag>
 
 <style>
@@ -30,4 +28,9 @@ const Tag = href ? "a" : "article";
       color: var(--link);
    }
 
+   a.project-card:hover .project-card__title,
+   a.project-card:focus-visible .project-card__title {
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+   }
 </style>

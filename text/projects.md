@@ -1,3 +1,6 @@
-- Mime Reader
-- Random Word Generator
-- Read Receipts
+- [Rhyme Golf](https://rhyme-golf.com/)
+- [Random Word Generator](https://randomwordgenerator.info/)
+- [Etymology Feed](https://etymologyfeed.com/)
+- [Read Receipts](https://readreceipts.org/)
+- [Hapax Legomenon Finder](https://peterchinman.com/hapax-finder/)
+- [lighght](https://peterchinman.github.io/lighght/)
