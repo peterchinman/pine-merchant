@@ -8,6 +8,9 @@ const deploysToGithubProjectPage =
    isGithubActions && owner && repository && !isUserOrOrgPage;
 
 export default defineConfig({
+   server: {
+      port: Number(process.env.PORT) || 4321,
+   },
    markdown: {
       remarkPlugins: [remarkDeflist],
    },
