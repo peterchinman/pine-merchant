@@ -1,3 +1,16 @@
+/* Stand-in for Tiny5 while it loads, sized so uppercase text takes up the same
+   room (Tiny5 caps are ~94.5% as wide as Courier New's). The vertical
+   overrides are Tiny5's real ascent/descent divided by that size-adjust, so
+   line heights match too. */
+@font-face {
+  font-family: "Tiny5 Fallback";
+  src: local("Courier New"), local("CourierNewPSMT");
+  size-adjust: 94.5%;
+  ascent-override: 92.6%;
+  descent-override: 26.5%;
+  line-gap-override: 0%;
+}
+
 :root {
   color-scheme: light;
   --bg: #fff;
@@ -13,14 +26,8 @@
   --dark-ink-muted: #eee7f1;
   --dark-link: #66B2FF;
 
-  --font-mono:
-    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas,
-    monospace;
-  --font-sans:
-    "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display:
-    "Tiny5", ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  /* --font-mono, --font-sans, --font-display are defined by Astro's fonts
+     config (astro.config.mjs) and emitted by <Font> in BaseLayout. */
 
   /* Shared section layout — values change at the breakpoints below */
   --section-gutter: 0.8rem;

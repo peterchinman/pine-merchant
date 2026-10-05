@@ -29,7 +29,19 @@ const links = [
 </nav>
 
 <style>
+  .navigation-bar {
+    /* horizontal hit-area padding on each link */
+    --link-pad: 0.5rem;
+
+    @media (max-width: 640px) {
+      --link-pad: 0;
+    }
+  }
+
   .navigation-bar ul {
+    /* Pull the row outward by the link padding, so link text lines up with
+       the text above and the padding hangs into the section gutter. */
+    margin-inline: calc(-1 * var(--link-pad));
     font-family: var(--font-display);
     font-size: var(--fontSize-2);
     text-transform: uppercase;
@@ -39,7 +51,8 @@ const links = [
     justify-content: space-between;
     /* rem, not ch: ch is measured in the (late-loading) display font, which
        made the container width shift on font swap. 41.25rem == the old 55ch. */
-    max-width: 41.25rem;
+    /* + both pulled-out paddings, so the text still spans 41.25rem */
+    max-width: calc(41.25rem + 2 * var(--link-pad));
     gap: 2rem;
 
     @media (max-width: 640) {
@@ -49,7 +62,7 @@ const links = [
 
   .navigation-bar a {
     text-decoration: none;
-    padding-inline: 0.5rem;
+    padding-inline: var(--link-pad);
   }
 
   .navigation-bar a:hover,
